@@ -1,0 +1,69 @@
+.sidebar {
+	width: 19%;
+	position: absolute;
+	top: 5px;
+	right: 0px;
+	text-align: center;
+	list-style-type: none;
+	margin-left: auto;
+	margin-right: auto;
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.location {
+	height: 100px;
+	width: 100%;
+	background-color: #f5f5f5;
+	border: 1px solid coral;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#map {
+	width: '80%';
+	height: '100%';
+}
+
+#app {
+	font-family: 'Avenir LT Std', sans-serif;
+}
+
+.form-control {
+	font-size: 1.4rem;
+}
+
+.sideform {
+	width: 19%;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1000px) {
+	.form-control {
+		font-size: 1rem;
+	}
+	#app {
+		font-size: small;
+	}
+	#map {
+		width: '80%';
+		height: '60%';
+	}
+}
+
+@media screen and (max-width: 600px) {
+	.form-control {
+		font-size: .8rem;
+	}
+	#app {
+		font-size: .8rem;
+	}
+	#map {
+		width: '80%';
+		height: '60%';
+	}
+}
+ 
