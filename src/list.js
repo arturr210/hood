@@ -72,7 +72,7 @@
              <div  className='sidebar'  >
         <form  style={{width: '100%'}}className='sideform' >
         <fieldset className="form-group">
-        <input style={{width: '100%'}}type="text" className="form-control form-control-lg" placeholder="Search"    role="Search" aria-labelledby="Search "  tabIndex="1"   onChange={this.handlechange.bind(this)} />
+        <input style={{width: '100%'}}type="text" className="form-control form-control-lg" placeholder="Search"    role="Search" aria-label="Search "  tabIndex="1"   onChange={this.handlechange.bind(this)} />
  
         </fieldset>
         </form>
@@ -97,3 +97,6 @@
 
 
  export default Filtered
+
+
+
