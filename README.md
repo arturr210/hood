@@ -26,6 +26,6 @@ To start the App in Production Mode: 	`npm run build`,then:
 
 
 
-
+The service worker is implemented only in the production build
 
 feel free to use your own credentials for Foursquare , mine were limited so I couldn't work through fetch  by id for a long time due severe data limis, hence no futher customizations

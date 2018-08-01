@@ -5,11 +5,13 @@ import {
     locations
 } from './locs.js';
 import './App.css';
- 
 
-  const  CLIENTID = 'DHYP414BYAR0DDOA1OVMGUXNPVN5NA5IYBM3QCCDI1PSYSKC';  
-  const  SECRET = '5OFGVUMI2LJA3QFOAYYZGIQBR2VYM1EMS0205RVRONXOZVR1';
- 
+import Filtered from './list'
+
+
+const CLIENTID = 'DHYP414BYAR0DDOA1OVMGUXNPVN5NA5IYBM3QCCDI1PSYSKC';
+const SECRET = '5OFGVUMI2LJA3QFOAYYZGIQBR2VYM1EMS0205RVRONXOZVR1';
+
 
 var indextest;
 
@@ -20,11 +22,9 @@ class App extends Component {
 
     fetchData(x, index) {
 
-        console.log(x, index, indextest,'x', 'index','indextest')
+        console.log(x, index, indextest, 'x', 'index', 'indextest')
         let tempdata = [];
         let data = {};
-
-        const ind=index
 
 
 
@@ -35,10 +35,11 @@ class App extends Component {
 
 
 
+
         var url = "https://api.foursquare.com/v2/venues/search?client_id=" + CLIENTID + "&client_secret=" + SECRET + "&v=20180729&ll=" + x.lat + "," + x.lng + "&limit=1";
 
 
-        fetch(url)                         //inspired by google resorces
+        fetch(url) //inspired by google resources
             .then((response) => {
 
                 if (response.ok) {
@@ -52,14 +53,14 @@ class App extends Component {
                     data: data
                 });
 
- 
 
 
-                    console.log(this.state.infowindows[indextest])
 
-                    this.state.infowindows[indextest].setContent("<h1>" + this.state.data.name + "</h1>" + "<h3>" + this.state.data.location.formattedAddress + "</h3>");
+                console.log(this.state.infowindows[indextest])
 
-            
+                this.state.infowindows[indextest].setContent("<h1>" + this.state.data.name + "</h1>" + "<h3>" + this.state.data.location.formattedAddress + "</h3>");
+
+
                 tempdata.push(data);
                 console.log(data.location.formattedAddress, 'data')
 
@@ -73,7 +74,7 @@ class App extends Component {
 
                 //console.log( jsonData.response.venues[0])
                 return jsonData;
-            }).catch((error) => { 
+            }).catch((error) => {
                 console.error(error);
                 this.state.infowindows[indextest].setContent("<h1>" + this.state.locs[indextest].name + "</h1>" + "<h3>" + 'No data from API provider' + "</h3>");
             })
@@ -198,7 +199,9 @@ class App extends Component {
     }
 
 
-
+    gm_authFailure() {
+        window.alert("Google Maps error!")
+    }
 
     onTileClickTwo = (props, marker, e) => {
 
@@ -209,7 +212,32 @@ class App extends Component {
         let tempmarks = this.state.locs;
 
         var testing = tempmarks.findIndex(b => b.name === props)
-       indextest=testing;
+        indextest = testing;
+
+
+        console.log(testing, 'testing2')
+        this.fetchData(this.state.locs[testing], testing)
+        console.log(this.fetchData(this.state.locs[testing]), 'fetchiiiing')
+        console.log(this.state.markers, 'this.state.markers')
+
+        window.google.maps.event.trigger(this.state.markers[testing], 'click');
+        console.log(this.state.infowindows, 'infowindowsTwo')
+
+
+        console.log(this.state.data)
+
+    }
+
+    onClick = (props, marker, e) => {
+
+        console.log(props, marker)
+
+
+
+        let tempmarks = this.state.locs;
+
+        var testing = tempmarks.findIndex(b => b.name === props)
+        indextest = testing;
 
 
         console.log(testing, 'testing2')
@@ -226,6 +254,9 @@ class App extends Component {
     }
 
     componentDidMount() {
+
+        window.gm_authFailure = this.gm_authFailure;
+
 
 
 
@@ -245,8 +276,8 @@ class App extends Component {
             zoom: 13
         })
 
+        let that = this
 
- 
 
         this.state.locs.map((place, index) => {
             console.log(index)
@@ -277,7 +308,12 @@ class App extends Component {
                     marker.open = false;
                 }
                 if (!marker.open) {
+
+                    indextest = index
+                    that.fetchData(that.state.locs[index], index)
                     infowindow.open(map, marker);
+
+
                     marker.open = true;
                     activeInfoWindow = infowindow;
 
@@ -313,29 +349,15 @@ class App extends Component {
                       Loading Google Maps... 
                       
                     </p></div>
-                    <div className='sidebar'  >
-                      <form style={{width: '100%'}}className='sideform' >
-                      <fieldset  className="form-group">
-                      <input style={{width: '100%'}} type="text" className="form-control form-control-lg" placeholder="Search"    role="Search" aria-labelledby="Search "  tabIndex="1" onChange={this.filterList.bind(this)}/>
-                      </fieldset>
-                      </form>
-                   
-               
-                        { this.state.items.map( (item) => (
-
-
-                           <div className='location'    key={item} onClick={this.onTileClickTwo.bind(this, item)} ><li   tabIndex='3' data-category={item} key={item}>{item}</li></div>
-                        ))}
-                       
-                
-                    </div>
+{/*                    */}
+                    <div><Filtered  onClick={this.onClick.bind(this)} onChange={this.filterList.bind(this)}/></div>
 
       </div>
         )
     }
 }
 
-function loadJS(src) { // from google serach :how to make google maps work without 3rd partu library, soethig like this
+function loadJS(src) { // from google serach :how to make google maps api working  without 3rd party library, something like this
     var ref = window.document.getElementsByTagName("script")[0];
     var script = window.document.createElement("script");
     script.src = src;
@@ -347,3 +369,26 @@ function loadJS(src) { // from google serach :how to make google maps work witho
 }
 
 export default App
+
+
+
+
+
+
+
+// <div className='sidebar'  >
+//                       <form style={{width: '100%'}}className='sideform' >
+//                       <fieldset  className="form-group">
+//                       <input style={{width: '100%'}} type="text" className="form-control form-control-lg" placeholder="Search"    role="Search" aria-labelledby="Search "  tabIndex="1" onChange={this.filterList.bind(this)}/>
+//                       </fieldset>
+//                       </form>
+                   
+               
+//                         { this.state.items.map( (item) => (
+
+
+//                            <div className='location'    key={item} onClick={this.onTileClickTwo.bind(this, item)} ><li  aria-label="location" role='list'  tabIndex='3' data-category={item} key={item}>{item}</li></div>
+//                         ))}
+                       
+                
+//                     </div>
