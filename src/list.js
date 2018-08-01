@@ -24,7 +24,7 @@
 
 
 
-     filterList = (event) => {
+     filterList = (event) => {// filtering
 
          let init = this.state.initialItems
          var updatedList = init.map(m => m.name)
@@ -64,7 +64,7 @@
 
      }
 
-     render() {
+     render() {// renders the sidebar with list
 
 
          let self = this;
@@ -72,7 +72,7 @@
              <div  className='sidebar'  >
         <form  style={{width: '100%'}}className='sideform' >
         <fieldset className="form-group">
-        <input style={{width: '100%'}}type="text" className="form-control form-control-lg" placeholder="Search"    role="Search" aria-label="Search "  tabIndex="1"   onChange={this.handlechange.bind(this)} />
+        <input style={{width: '100%'}}type="text" className="form-control form-control-lg" placeholder="Search"    role="search" aria-label="Search "  tabIndex="1"   onChange={this.handlechange.bind(this)} />
  
         </fieldset>
         </form>
@@ -84,7 +84,7 @@
 
         this.state.items.map(function(item) {
               
-          return  <div key={item}  className='location' onClick={self.props.onClick.bind(self,item)}><li     aria-label="location" role='list'  tabIndex='3' data-category={item} key={item}>{item}</li></div>
+          return  <div key={item}  className='location' onClick={self.props.onClick.bind(self,item)}><li     aria-label="location" role='button'  tabIndex='3' data-category={item} key={item}>{item}</li></div>
         })
        }
    

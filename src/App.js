@@ -20,7 +20,7 @@ var activeInfoWindow;
 class App extends Component {
 
 
-    fetchData(x, index) {
+    fetchData(x, index) {          //fetches data from api
 
         console.log(x, index, indextest, 'x', 'index', 'indextest')
         let tempdata = [];
@@ -58,7 +58,7 @@ class App extends Component {
 
                 console.log(this.state.infowindows[indextest])
 
-                this.state.infowindows[indextest].setContent("<h1>" + this.state.data.name + "</h1>" + "<h3>" + this.state.data.location.formattedAddress + "</h3>");
+                this.state.infowindows[indextest].setContent("<h1>" + this.state.data.name + "</h1>" + "<h3>" + this.state.data.location.formattedAddress + "</h3>");  //updates infowindow
 
 
                 tempdata.push(data);
@@ -76,7 +76,7 @@ class App extends Component {
                 return jsonData;
             }).catch((error) => {
                 console.error(error);
-                this.state.infowindows[indextest].setContent("<h1>" + this.state.locs[indextest].name + "</h1>" + "<h3>" + 'No data from API provider' + "</h3>");
+                this.state.infowindows[indextest].setContent("<h1>" + this.state.locs[indextest].name + "</h1>" + "<h3>" + 'No data from API provider' + "</h3>");//no data from api
             })
         return true;
 
@@ -87,7 +87,7 @@ class App extends Component {
 
 
 
-    filterList = (event) => { // taken from stackoverflow
+    filterList = (event) => { // taken from stackoverflow, filtering on input change
 
 
         console.log(event.target.value)
@@ -110,7 +110,7 @@ class App extends Component {
 
 
 
-        if (event.target.value !== '') { // taken from stackoverflow and Udacity's webinars
+        if (event.target.value !== '') { // taken from stackoverflow and Udacity's webinars, markers update on the map
 
             this.state.locs.forEach((loc, index) => {
                 if (loc.name.toLowerCase().includes(event.target.value.toLowerCase())) {
@@ -184,7 +184,7 @@ class App extends Component {
 
 
 
-    state = {
+    state = {   //states 
 
         locs: locations,
         places: '',
@@ -199,36 +199,11 @@ class App extends Component {
     }
 
 
-    gm_authFailure() {
+    gm_authFailure() {  //error handling
         window.alert("Google Maps error!")
     }
 
-    onTileClickTwo = (props, marker, e) => {
-
-        console.log(props, marker)
-
-
-
-        let tempmarks = this.state.locs;
-
-        var testing = tempmarks.findIndex(b => b.name === props)
-        indextest = testing;
-
-
-        console.log(testing, 'testing2')
-        this.fetchData(this.state.locs[testing], testing)
-        console.log(this.fetchData(this.state.locs[testing]), 'fetchiiiing')
-        console.log(this.state.markers, 'this.state.markers')
-
-        window.google.maps.event.trigger(this.state.markers[testing], 'click');
-        console.log(this.state.infowindows, 'infowindowsTwo')
-
-
-        console.log(this.state.data)
-
-    }
-
-    onClick = (props, marker, e) => {
+    onClick = (props, marker, e) => {    //click of the element from the  list
 
         console.log(props, marker)
 
@@ -267,7 +242,7 @@ class App extends Component {
     }
 
     initMap = () => {
-        const map = new window.google.maps.Map(document.getElementById('map'), { // based and taken either  from the Udacity course or stackoverflow search...
+        const map = new window.google.maps.Map(document.getElementById('map'), { // based and taken either  from the Udacity course or stackoverflow search..., maps start
 
             center: {
                 lat: 51.507416,
@@ -283,7 +258,7 @@ class App extends Component {
             console.log(index)
 
 
-            var marker = new window.google.maps.Marker({
+            var marker = new window.google.maps.Marker({//maker 
                 position: {
                     lat: place.lat,
                     lng: place.lng
@@ -301,7 +276,7 @@ class App extends Component {
             this.state.infowindows.push(infowindow)
 
 
-            marker.addListener('click', function() {
+            marker.addListener('click', function() {//makers event listeners
 
                 if (activeInfoWindow) {
                     activeInfoWindow.close();
@@ -329,7 +304,7 @@ class App extends Component {
 
             })
 
-            map.addListener('click', function() {
+            map.addListener('click', function() {// clears the active window
                 infowindow.close();
                 marker.open = false;
             })
@@ -373,22 +348,3 @@ export default App
 
 
 
-
-
-
-// <div className='sidebar'  >
-//                       <form style={{width: '100%'}}className='sideform' >
-//                       <fieldset  className="form-group">
-//                       <input style={{width: '100%'}} type="text" className="form-control form-control-lg" placeholder="Search"    role="Search" aria-labelledby="Search "  tabIndex="1" onChange={this.filterList.bind(this)}/>
-//                       </fieldset>
-//                       </form>
-                   
-               
-//                         { this.state.items.map( (item) => (
-
-
-//                            <div className='location'    key={item} onClick={this.onTileClickTwo.bind(this, item)} ><li  aria-label="location" role='list'  tabIndex='3' data-category={item} key={item}>{item}</li></div>
-//                         ))}
-                       
-                
-//                     </div>
