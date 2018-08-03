@@ -12,6 +12,8 @@ import Filtered from './list'
 const CLIENTID = 'DHYP414BYAR0DDOA1OVMGUXNPVN5NA5IYBM3QCCDI1PSYSKC';
 const SECRET = '5OFGVUMI2LJA3QFOAYYZGIQBR2VYM1EMS0205RVRONXOZVR1';
 
+ 
+const URL = 'https://api.foursquare.com/v2/venues/';
 
 var indextest;
 
@@ -34,12 +36,12 @@ class App extends Component {
         console.log(locs, 'locs')
 
 
+        let  venueURL = `${URL}${x.id}?client_id=${CLIENTID}&client_secret=${SECRET}&v=20180803`;
+
+        //var url = "https://api.foursquare.com/v2/venues/search?client_id=" + CLIENTID + "&client_secret=" + SECRET + "&v=20180729&ll=" + x.lat + "," + x.lng + "&limit=1";
 
 
-        var url = "https://api.foursquare.com/v2/venues/search?client_id=" + CLIENTID + "&client_secret=" + SECRET + "&v=20180729&ll=" + x.lat + "," + x.lng + "&limit=1";
-
-
-        fetch(url) //inspired by google resources
+        fetch(venueURL) //inspired by google resources
             .then((response) => {
 
                 if (response.ok) {
@@ -48,21 +50,22 @@ class App extends Component {
                 throw new Error('error no data, check console or exceeded limit, again...');
             }).then((jsonData) => {
 
-                data = jsonData.response.venues[0];
+               // data = jsonData.response.venues[0];
+                      data = jsonData.response.venue;
                 this.setState({
                     data: data
                 });
 
 
-
+                console.log(data,'datadata')
 
                 console.log(this.state.infowindows[indextest])
 
-                this.state.infowindows[indextest].setContent("<h1>" + this.state.data.name + "</h1>" + "<h3>" + this.state.data.location.formattedAddress + "</h3>");  //updates infowindow
+                this.state.infowindows[indextest].setContent("<h2>" + this.state.data.name + "</h2>" + "<h6>" + this.state.data.location.formattedAddress.toString() + "</h6>"+'<img src=' + this.state.data.photos.groups[1].items["0"].prefix + '300x300' + this.state.data.photos.groups[1].items["0"].suffix + '>' );  //updates infowindow
 
 
                 tempdata.push(data);
-                console.log(data.location.formattedAddress, 'data')
+                console.log(data.photos, 'data')
 
                 this.setState({
                     data: data
